@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOCIAL POST</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Roboto', sans-serif;
+            padding: 20px;
+        }
+        
+        .container {
+            display: flex;
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .card {
+            width: 500px;
+            height: 500px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            height: 50px;
+            gap: 15px;
+        }
+        
+        .logo-image {
+            height: 100%;
+            width: auto;
+            border-radius: 8px;
+            object-fit: contain;
+        }
+        
+        .page-name {
+            flex: 1;
+            text-align: center;
+            font-weight: 900;
+            font-size: 22px;
+            color: #2563eb;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .social-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #94a3b8;
+            margin-left: auto;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .social-icons i {
+            font-size: 14px;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .social-icons i:hover {
+            color: #2563eb;
+        }
+        
+        .handle {
+            font-weight: 700;
+            color: #64748b;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .main-content {
+            flex: 1;
+            text-align: justify;
+            color: #334155;
+            font-size: 15.5px;
+            line-height: 1.45;
+            hyphens: auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-box {
+            float: right;
+            width: 190px;
+            height: 190px;
+            margin-left: 15px;
+            margin-bottom: 8px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .header-container {
+            position: relative;
+            margin-bottom: 10px;
+            width: 100%;
+            min-height: 60px;
+        }
+
+        h2 {
+            font-size: 46px;
+            font-weight: 900;
+            color: #1e293b;
+            margin-bottom: 10px;
+            line-height: 0.85;
+            letter-spacing: -1.5px;
+            text-transform: uppercase;
+            width: auto;
+            max-width: 300px;
+            word-wrap: break-word;
+            hyphens: auto;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            white-space: normal;
+            display: block;
+        }
+
+        .accent-text {
+            color: #2563eb;
+            font-weight: 700;
+            display: inline;
+        }
+
+        .main-text {
+            margin-top: 5px;
+            text-align: justify;
+            overflow-wrap: break-word;
+        }
+        
+        .editor-panel {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+            padding: 25px;
+            width: 500px;
+            height: 500px;
+            overflow-y: auto;
+        }
+        
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .panel-header h1 {
+            font-size: 24px;
+            font-weight: 900;
+            color: #1e293b;
+        }
+        
+        .panel-header span {
+            color: #2563eb;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 15px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #64748b;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 14px;
+        }
+        
+        .tab.active {
+            background: #2563eb;
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #64748b;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #334155;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        textarea.input-field {
+            resize: vertical;
+            min-height: 120px;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        .shapes-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .shape-option {
+            width: 100%;
+            aspect-ratio: 1;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
+            overflow: hidden;
+        }
+        
+        .shape-option.active {
+            border-color: #2563eb;
+            background: rgba(37, 99, 235, 0.1);
+            transform: scale(0.95);
+        }
+        
+        .shape-preview {
+            width: 80%;
+            height: 80%;
+            background: #2563eb;
+        }
+        
+        .color-pickers {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .color-picker-group {
+            text-align: center;
+        }
+        
+        .color-picker-group input[type="color"] {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            border: 3px solid #e2e8f0;
+            cursor: pointer;
+            margin-bottom: 8px;
+        }
+        
+        .color-picker-group label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #64748b;
+        }
+        
+        .download-btn {
+            width: 100%;
+            padding: 15px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .download-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+        }
+        
+        .download-btn:active {
+            transform: translateY(0);
+        }
+        
+        .shape-square {
+            border-radius: 0;
+        }
+        
+        .shape-circle {
+            border-radius: 50%;
+        }
+        
+        .shape-rounded-square {
+            border-radius: 20px;
+        }
+        
+        .shape-corner-folded {
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+        }
+        
+        .shape-hexagon {
+            clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+        }
+        
+        .shape-octagon {
+            clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+        }
+        
+        .shape-rhombus {
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+        
+        .shape-polygon {
+            clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
+        }
+        
+        .shape-squircle {
+            border-radius: 40% / 50%;
+        }
+        
+        .shape-filmstrip {
+            clip-path: polygon(0% 10%, 10% 10%, 10% 0%, 90% 0%, 90% 10%, 100% 10%, 100% 90%, 90% 90%, 90% 100%, 10% 100%, 10% 90%, 0% 90%);
+        }
+        
+        .shape-wavy-circle {
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+        }
+        
+        .shape-curved-rectangle {
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        }
+        
+        .shape-folded-rectangle {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 20% 100%, 0 80%);
+        }
+        
+        .shape-wavy-box {
+            border-radius: 20px 50px 20px 50px / 50px 20px 50px 20px;
+        }
+        
+        .shape-zigzag-box {
+            clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 80% 100%, 60% 90%, 40% 100%, 20% 90%, 0% 100%);
+        }
+        
+        .shape-inverted-radius {
+            border-radius: 50px 20px 50px 20px / 20px 50px 20px 50px;
+        }
+        
+        .shape-wavy-special {
+            border-radius: 30% 70% 50% 50% / 50% 50% 50% 50%;
+        }
+        
+        .shape-curved-special {
+            border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%;
+        }
+        
+        .shape-wave-pattern {
+            clip-path: polygon(0% 20%, 20% 0%, 40% 20%, 60% 0%, 80% 20%, 100% 0%, 100% 100%, 80% 80%, 60% 100%, 40% 80%, 20% 100%, 0% 80%);
+        }
+        
+        .shape-zigzag-special {
+            clip-path: polygon(0% 15%, 15% 0%, 30% 15%, 45% 0%, 60% 15%, 75% 0%, 90% 15%, 100% 0%, 100% 100%, 85% 85%, 70% 100%, 55% 85%, 40% 100%, 25% 85%, 10% 100%, 0% 85%);
+        }
+        
+        .shape-inverted-special {
+            border-radius: 40px 10px 40px 10px / 10px 40px 10px 40px;
+        }
+        
+        .shape-hexagon-proper {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        
+        .shape-pentagon {
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+        }
+        
+        .shape-parallelogram {
+            clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+        }
+        
+        .shape-trapezoid {
+            clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+        }
+        
+        .shape-frame {
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 25%, 25% 25%, 25% 75%, 0% 75%);
+        }
+        
+        .loading-spinner {
+            display: none;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .file-upload {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .file-upload-btn {
+            width: 100%;
+            padding: 12px;
+            background: #f1f5f9;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            color: #64748b;
+            cursor: pointer;
+            text-align: center;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .file-upload-btn:hover {
+            background: #e2e8f0;
+            border-color: #94a3b8;
+        }
+        
+        .file-upload input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .logo-upload-preview {
+            width: 100%;
+            height: 100px;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #f8fafc;
+        }
+        
+        .logo-upload-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .header-input-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .accent-word-input {
+            flex: 1;
+        }
+        
+        .word-count {
+            font-size: 11px;
+            color: #64748b;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        
+        @media (max-width: 1100px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .editor-panel {
+                width: 500px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .card, .editor-panel {
+                width: 100%;
+                max-width: 500px;
+            }
+            
+            .shapes-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .card-header {
+                flex-wrap: wrap;
+                height: auto;
+                gap: 10px;
+            }
+            
+            .page-name {
+                order: 3;
+                width: 100%;
+                margin-top: 10px;
+            }
+            
+            .social-section {
+                margin-left: 0;
+                order: 2;
+            }
+            
+            .header-input-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            h2 {
+                font-size: 38px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .shapes-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            h2 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card" id="card-preview">
+            <div class="card-header">
+                <div id="logo-container">
+                    <img id="logo-image" src="https://cdn-icons-png.flaticon.com/512/732/732204.png" alt="Logo" class="logo-image">
+                </div>
+                <div id="page-name" class="page-name">ADITYA_PRO</div>
+                <div class="social-section">
+                    <div class="social-icons" id="social-icons">
+                        <i class="fab fa-instagram"></i>
+                        <i class="fab fa-linkedin"></i>
+                        <i class="fab fa-facebook"></i>
+                        <i class="fab fa-whatsapp"></i>
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <div id="handle-text" class="handle">@aditya_design</div>
+                </div>
+            </div>
+            
+            <div class="main-content">
+                <div id="image-container" class="image-box shape-square">
+                    <img id="main-image" src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=400" alt="Product">
+                </div>
+
+                <div class="header-container">
+                    <h2 id="header-text">ADI<span class="accent-text" id="accent-text">TYA</span> VISUAL</h2>
+                </div>
+                
+                <div id="content-text" class="main-text">
+                    This layout is designed to maximize every pixel while maintaining a high-end professional aesthetic. By utilizing the <span class="accent-text">L-shape text wrap</span>, we eliminate awkward white spaces and ensure the content flows naturally around your hero image. Everything you see here is optimized for immediate impact. The header keeps your branding clear with integrated social icons, while the justified text creates a solid, structured block that feels grounded and intentional. We have removed all the clutter to focus on what matters. We have removed all the clutter to focus on what matters. We have removed all the clutter to focus on what matters. We have removed all the clutter to focus on what matters. We have removed all the clutter to focus on what matters.
+                </div>
+            </div>
+        </div>
+        
+        <div class="editor-panel">
+            <div class="panel-header">
+                <h1>Elite Studio <span>v3.0</span></h1>
+            </div>
+            
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('content')">Content</button>
+                <button class="tab" onclick="switchTab('shapes')">Shapes</button>
+                <button class="tab" onclick="switchTab('colors')">Colors</button>
+            </div>
+            
+            <div id="content-tab" class="tab-content active">
+                <div class="input-group">
+                    <label for="page-name-input">Page Name</label>
+                    <input type="text" id="page-name-input" class="input-field" value="ADITYA_PRO" placeholder="Enter page name">
+                </div>
+                
+                <div class="input-group">
+                    <label for="header-input">Header Text</label>
+                    <div class="header-input-group">
+                        <input type="text" id="header-input" class="input-field accent-word-input" value="ADITYA VISUAL" placeholder="Enter header text">
+                        <div class="word-count" id="word-count">Words: 2</div>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="accent-word-input">Accent Word Positions</label>
+                    <input type="text" id="accent-word-input" class="input-field" value="2" placeholder="e.g., 2 or 2,4,7">
+                    <small style="color: #64748b; font-size: 11px;">Enter word positions to accent (e.g., "2" or "2,4,7")</small>
+                </div>
+                
+                <div class="input-group">
+                    <label for="handle-input">Social Handle</label>
+                    <input type="text" id="handle-input" class="input-field" value="@aditya_design" placeholder="Enter social handle">
+                </div>
+                
+                <div class="input-group">
+                    <label for="content-input">Content Text</label>
+                    <textarea id="content-input" class="input-field" rows="4" placeholder="Enter content text">This layout is designed to maximize every pixel while maintaining a high-end professional aesthetic. By utilizing the L-shape text wrap, we eliminate awkward white spaces and ensure the content flows naturally around your hero image. Everything you see here is optimized for immediate impact. The header keeps your branding clear with integrated social icons, while the justified text creates a solid, structured block that feels grounded and intentional. We have removed all the clutter to focus on what matters. We have removed all the clutter to focus on what matters. We have removed all the clutter to focus on what matters. We have removed all the clutter to focus on what matters. We have removed all the clutter to focus on what matters.</textarea>
+                </div>
+                
+                <div class="input-group">
+                    <label>Upload Logo Image</label>
+                    <div class="file-upload">
+                        <button class="file-upload-btn">Choose Logo Image</button>
+                        <input type="file" id="logo-upload" accept="image/*">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Upload Main Image</label>
+                    <div class="file-upload">
+                        <button class="file-upload-btn">Choose Main Image</button>
+                        <input type="file" id="image-upload" accept="image/*">
+                    </div>
+                </div>
+            </div>
+            
+            <div id="shapes-tab" class="tab-content">
+                <div class="shapes-grid">
+                    <!-- Original Shapes -->
+                    <div class="shape-option active" onclick="selectShape('shape-square')">
+                        <div class="shape-preview shape-square"></div>
+                    </div>
+                    <div class="shape-option" onclick="selectShape('shape-circle')">
+                        <div class="shape-preview shape-circle"></div>
+                    </div>
+                    <div class="shape-option" onclick="selectShape('shape-rounded-square')">
+                        <div class="shape-preview shape-rounded-square"></div>
+                    </div>
+                    <div class="shape-option" onclick="selectShape('shape-corner-folded')">
+                        <div class="shape-preview shape-corner-folded"></div>
+                    </div>
+                    
+                    <!-- NEW: Proper Hexagon -->
+                    <div class="shape-option" onclick="selectShape('shape-hexagon-proper')">
+                        <div class="shape-preview shape-hexagon-proper"></div>
+                    </div>
+                    
+                    <!-- NEW: Wavy Circle -->
+                    <div class="shape-option" onclick="selectShape('shape-wavy-circle')">
+                        <div class="shape-preview shape-wavy-circle"></div>
+                    </div>
+                    
+                    <!-- NEW: Curved Rectangle -->
+                    <div class="shape-option" onclick="selectShape('shape-curved-rectangle')">
+                        <div class="shape-preview shape-curved-rectangle"></div>
+                    </div>
+                    
+                    <!-- NEW: Folded Rectangle -->
+                    <div class="shape-option" onclick="selectShape('shape-folded-rectangle')">
+                        <div class="shape-preview shape-folded-rectangle"></div>
+                    </div>
+                    
+                    <!-- NEW: Wavy Box -->
+                    <div class="shape-option" onclick="selectShape('shape-wavy-box')">
+                        <div class="shape-preview shape-wavy-box"></div>
+                    </div>
+                    
+                    <!-- NEW: Zigzag Box -->
+                    <div class="shape-option" onclick="selectShape('shape-zigzag-box')">
+                        <div class="shape-preview shape-zigzag-box"></div>
+                    </div>
+                    
+                    <!-- NEW: Inverted Radius -->
+                    <div class="shape-option" onclick="selectShape('shape-inverted-radius')">
+                        <div class="shape-preview shape-inverted-radius"></div>
+                    </div>
+                    
+                    <!-- Additional Original Shapes -->
+                    <div class="shape-option" onclick="selectShape('shape-octagon')">
+                        <div class="shape-preview shape-octagon"></div>
+                    </div>
+                    <div class="shape-option" onclick="selectShape('shape-rhombus')">
+                        <div class="shape-preview shape-rhombus"></div>
+                    </div>
+                    <div class="shape-option" onclick="selectShape('shape-polygon')">
+                        <div class="shape-preview shape-polygon"></div>
+                    </div>
+                    <div class="shape-option" onclick="selectShape('shape-squircle')">
+                        <div class="shape-preview shape-squircle"></div>
+                    </div>
+                    <div class="shape-option" onclick="selectShape('shape-filmstrip')">
+                        <div class="shape-preview shape-filmstrip"></div>
+                    </div>
+                    <div class="shape-option" onclick="selectShape('shape-pentagon')">
+                        <div class="shape-preview shape-pentagon"></div>
+                    </div>
+                    <div class="shape-option" onclick="selectShape('shape-parallelogram')">
+                        <div class="shape-preview shape-parallelogram"></div>
+                    </div>
+                    <div class="shape-option" onclick="selectShape('shape-trapezoid')">
+                        <div class="shape-preview shape-trapezoid"></div>
+                    </div>
+                    <div class="shape-option" onclick="selectShape('shape-frame')">
+                        <div class="shape-preview shape-frame"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- COLORS TAB -->
+            <div id="colors-tab" class="tab-content">
+                <div class="color-pickers">
+                    <div class="color-picker-group">
+                        <input type="color" id="page-name-color" value="#2563eb">
+                        <label>Page Name Color</label>
+                    </div>
+                    <div class="color-picker-group">
+                        <input type="color" id="header-color" value="#1e293b">
+                        <label>Header Color</label>
+                    </div>
+                    <div class="color-picker-group">
+                        <input type="color" id="accent-color" value="#2563eb">
+                        <label>Accent Color</label>
+                    </div>
+                    <div class="color-picker-group">
+                        <input type="color" id="text-color" value="#334155">
+                        <label>Text Color</label>
+                    </div>
+                    <div class="color-picker-group">
+                        <input type="color" id="handle-color" value="#64748b">
+                        <label>Handle Color</label>
+                    </div>
+                    <div class="color-picker-group">
+                        <input type="color" id="icon-color" value="#94a3b8">
+                        <label>Icon Color</label>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Card Background Color</label>
+                    <input type="color" id="bg-color" value="#ffffff" class="input-field" style="height: 50px; width: 100%; padding: 5px;">
+                </div>
+            </div>
+            
+            <!-- DOWNLOAD BUTTON -->
+            <button id="download-btn" class="download-btn">
+                <i class="fas fa-download"></i>
+                <span>DOWNLOAD CARD</span>
+                <div class="loading-spinner" id="loading-spinner"></div>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Current settings
+        let currentSettings = {
+            shape: 'shape-square',
+            pageNameColor: '#2563eb',
+            headerColor: '#1e293b',
+            accentColor: '#2563eb',
+            textColor: '#334155',
+            handleColor: '#64748b',
+            iconColor: '#94a3b8',
+            bgColor: '#ffffff'
+        };
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            updatePreview();
+            updateWordCount();
+        });
+        
+        // Setup all event listeners
+        function setupEventListeners() {
+            // Text inputs
+            document.getElementById('page-name-input').addEventListener('input', updatePreview);
+            document.getElementById('header-input').addEventListener('input', function() {
+                updateWordCount();
+                updatePreview();
+            });
+            document.getElementById('accent-word-input').addEventListener('input', function() {
+                updatePreview();
+            });
+            document.getElementById('handle-input').addEventListener('input', updatePreview);
+            document.getElementById('content-input').addEventListener('input', updatePreview);
+            
+            // Color inputs
+            document.getElementById('page-name-color').addEventListener('input', updateColors);
+            document.getElementById('header-color').addEventListener('input', updateColors);
+            document.getElementById('accent-color').addEventListener('input', updateColors);
+            document.getElementById('text-color').addEventListener('input', updateColors);
+            document.getElementById('handle-color').addEventListener('input', updateColors);
+            document.getElementById('icon-color').addEventListener('input', updateColors);
+            document.getElementById('bg-color').addEventListener('input', updateColors);
+            
+            // Image uploads
+            document.getElementById('logo-upload').addEventListener('change', handleLogoUpload);
+            document.getElementById('image-upload').addEventListener('change', handleImageUpload);
+            
+            // Download button
+            document.getElementById('download-btn').addEventListener('click', downloadCard);
+        }
+        
+        // Update word count
+        function updateWordCount() {
+            const headerText = document.getElementById('header-input').value;
+            const words = headerText.trim().split(/\s+/).filter(word => word.length > 0);
+            const wordCount = words.length;
+            document.getElementById('word-count').textContent = `Words: ${wordCount}`;
+        }
+        
+        // Tab switching
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active class from all tab buttons
+            document.querySelectorAll('.tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+        
+        // Shape selection
+        function selectShape(shape) {
+            currentSettings.shape = shape;
+            
+            // Update shape options
+            document.querySelectorAll('.shape-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            event.target.closest('.shape-option').classList.add('active');
+            
+            // Update image container
+            const imageContainer = document.getElementById('image-container');
+            imageContainer.className = `image-box ${shape}`;
+        }
+        
+        // Update colors - FIXED BACKGROUND COLOR ISSUE
+        function updateColors() {
+            // Get color values
+            currentSettings.pageNameColor = document.getElementById('page-name-color').value;
+            currentSettings.headerColor = document.getElementById('header-color').value;
+            currentSettings.accentColor = document.getElementById('accent-color').value;
+            currentSettings.textColor = document.getElementById('text-color').value;
+            currentSettings.handleColor = document.getElementById('handle-color').value;
+            currentSettings.iconColor = document.getElementById('icon-color').value;
+            currentSettings.bgColor = document.getElementById('bg-color').value;
+            
+            // Apply colors
+            document.getElementById('page-name').style.color = currentSettings.pageNameColor;
+            document.getElementById('header-text').style.color = currentSettings.headerColor;
+            
+            // Update accent text color
+            document.querySelectorAll('.accent-text').forEach(el => {
+                el.style.color = currentSettings.accentColor;
+            });
+            
+            // Update main content text color
+            document.getElementById('content-text').style.color = currentSettings.textColor;
+            
+            // Update handle text color
+            document.getElementById('handle-text').style.color = currentSettings.handleColor;
+            
+            // Update social icons color
+            document.querySelectorAll('.social-icons i').forEach(icon => {
+                icon.style.color = currentSettings.iconColor;
+            });
+            
+            // FIX: Update card background color
+            document.getElementById('card-preview').style.backgroundColor = currentSettings.bgColor;
+        }
+        
+        // Handle logo upload
+        function handleLogoUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const logoImg = document.getElementById('logo-image');
+                    logoImg.src = event.target.result;
+                    
+                    // Adjust logo height to match header
+                    const logoContainer = document.getElementById('logo-container');
+                    logoContainer.style.height = '50px';
+                    logoImg.style.height = '100%';
+                    logoImg.style.width = 'auto';
+                    logoImg.style.objectFit = 'contain';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        // Handle main image upload
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    document.getElementById('main-image').src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        // Update preview with improved header wrapping
+        function updatePreview() {
+            // Update page name
+            document.getElementById('page-name').textContent = document.getElementById('page-name-input').value;
+            
+            // Update header text with proper word spacing
+            const headerText = document.getElementById('header-input').value;
+            const words = headerText.trim().split(/\s+/).filter(word => word.length > 0);
+            
+            // Get accent word positions from comma-separated string
+            const accentInput = document.getElementById('accent-word-input').value;
+            const accentPositions = accentInput
+                .split(',')
+                .map(pos => parseInt(pos.trim()))
+                .filter(pos => !isNaN(pos) && pos > 0 && pos <= words.length);
+            
+            // Create header HTML with proper spacing - NOW WRAPS LIKE TEXT
+            let headerHTML = '';
+            if (words.length > 0) {
+                for (let i = 0; i < words.length; i++) {
+                    const wordPosition = i + 1;
+                    
+                    if (accentPositions.includes(wordPosition)) {
+                        // This is an accent word
+                        headerHTML += `<span class="accent-text">${words[i]}</span>`;
+                    } else {
+                        headerHTML += words[i];
+                    }
+                    
+                    // Add space between words (except after last word)
+                    if (i < words.length - 1) {
+                        headerHTML += ' ';
+                    }
+                }
+                
+                // Apply to header with proper handling for long text
+                const headerElement = document.getElementById('header-text');
+                headerElement.innerHTML = headerHTML;
+                
+                // REMOVE THE max-width restriction to allow natural wrapping
+                headerElement.style.maxWidth = '100%';
+                headerElement.style.width = 'auto';
+                
+                // Adjust font size based on text length
+                if (headerText.length > 50) {
+                    headerElement.style.fontSize = '34px';
+                } else if (headerText.length > 30) {
+                    headerElement.style.fontSize = '38px';
+                } else if (headerText.length > 20) {
+                    headerElement.style.fontSize = '42px';
+                } else {
+                    headerElement.style.fontSize = '46px';
+                }
+                
+                // Ensure proper text wrapping
+                headerElement.style.whiteSpace = 'normal';
+                headerElement.style.overflowWrap = 'break-word';
+                headerElement.style.wordBreak = 'break-word';
+                headerElement.style.display = 'block';
+            } else {
+                document.getElementById('header-text').textContent = '';
+            }
+            
+            // Update social handle
+            document.getElementById('handle-text').textContent = document.getElementById('handle-input').value;
+            
+            // Update content text with proper text wrap logic
+            const contentText = document.getElementById('content-input').value;
+            const contentElement = document.getElementById('content-text');
+            
+            // First, preserve any existing accent spans in the content
+            let processedText = contentText;
+            
+            // Replace newlines with spaces for proper wrapping
+            processedText = processedText.replace(/\n/g, ' ');
+            
+            // Apply to content with proper text justification
+            contentElement.innerHTML = processedText;
+            
+            // Update colors again to ensure they apply to new elements
+            updateColors();
+            
+            // IMPORTANT: Re-apply accent color to any accent text in the content
+            // This handles the "L-shape text wrap" mention in the default text
+            const allAccentSpans = contentElement.querySelectorAll('.accent-text');
+            allAccentSpans.forEach(span => {
+                span.style.color = currentSettings.accentColor;
+            });
+        }
+        
+        // Download card
+        async function downloadCard() {
+            const btn = document.getElementById('download-btn');
+            const originalHTML = btn.innerHTML;
+            const spinner = document.getElementById('loading-spinner');
+            
+            // Show loading
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            btn.disabled = true;
+            spinner.style.display = 'block';
+            
+            try {
+                // Capture card
+                const canvas = await html2canvas(document.getElementById('card-preview'), {
+                    scale: 3,
+                    backgroundColor: null,
+                    useCORS: true,
+                    logging: false,
+                    allowTaint: true
+                });
+                
+                // Create download link
+                const link = document.createElement('a');
+                link.download = `Elite-Studio-Card-${Date.now()}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                
+                // Success feedback
+                btn.innerHTML = '<i class="fas fa-check"></i><span>DOWNLOADED!</span>';
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                }, 2000);
+            } catch (error) {
+                console.error('Download error:', error);
+                btn.innerHTML = '<i class="fas fa-exclamation-circle"></i><span>ERROR!</span>';
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                }, 2000);
+            } finally {
+                btn.disabled = false;
+                spinner.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
