@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chrome Dino with Images</title>
+    <style>
+        body { margin: 0; background: #fff; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; font-family: monospace; }
+        canvas { background: #fff; border-bottom: 2px solid #333; }
+    </style>
+</head>
+<body>
+    <canvas id="c" width="800" height="200"></canvas>
+<script>
+const canvas = document.getElementById('c'), ctx = canvas.getContext('2d');
+let score = 0, speed = 7, over = false, frame = 0, spacePressed = false;
+let obstacles = [];
+
+// Load your 3 images (Make sure files are named: dino.png, cactus.png, bird.png)
+const dinoImg = new Image(); dinoImg.src = 'dino.png';
+const cactusImg = new Image(); cactusImg.src = 'cactus.png';
+const birdImg = new Image(); birdImg.src = 'bird.png';
+
+const dino = { x: 50, y: 140, w: 40, h: 55, vy: 0, gravity: 0.75, jumping: false };
+
+document.addEventListener('keydown', e => { if (e.code === 'Space') { e.preventDefault(); spacePressed = true; if (over) reset(); else if (!dino.jumping) { dino.vy = -12; dino.jumping = true; } } });
+document.addEventListener('keyup', e => { if (e.code === 'Space') spacePressed = false; });
+
+function spawn() {
+    let last = obstacles[obstacles.length - 1];
+    if ((!last || last.x < canvas.width - 240) && Math.random() < 0.25) {
+        let isBird = Math.random() > 0.45;
+        if (isBird) {
+            let y = [95, 125, 150][Math.floor(Math.random() * 3)];
+            obstacles.push({ x: 800, y: y, w: 45, h: 30, type: 'bird' });
+        } else {
+            let h = Math.random() > 0.5 ? 55 : 40;
+            obstacles.push({ x: 800, y: 195 - h, w: 35, h: h, type: 'cactus' });
+        }
+    }
+}
+
+function reset() {
+    score = 0; speed = 7; over = false; obstacles = []; frame = 0;
+    dino.y = 140; dino.vy = 0; dino.jumping = false;
+    loop();
+}
+
+function loop() {
+    if (over) return;
+    frame++;
+    ctx.clearRect(0, 0, 800, 200);
+
+    if (dino.jumping && spacePressed && dino.vy > 0) dino.vy += 0.5;
+
+    dino.y += dino.vy;
+    dino.vy += dino.gravity;
+    if (dino.y >= 140) { dino.y = 140; dino.vy = 0; dino.jumping = false; }
+
+    // Draw Mirror Image Dino
+    ctx.save();
+    ctx.scale(-1, 1);
+    // When flipping horizontally, the x-coordinate becomes negative, so we adjust it (-dino.x - dino.w)
+    ctx.drawImage(dinoImg, -dino.x - dino.w, dino.y, dino.w, dino.h);
+    ctx.restore();
+
+    spawn();
+
+    for (let i = obstacles.length - 1; i >= 0; i--) {
+        let o = obstacles[i];
+        o.x -= speed;
+
+        // Draw Obstacle Image (Mirror image if it's a bird, normal if it's a cactus)
+        if (o.type === 'bird') {
+            ctx.save();
+            ctx.scale(-1, 1);
+            ctx.drawImage(birdImg, -o.x - o.w, o.y, o.w, o.h);
+            ctx.restore();
+        } else {
+            ctx.drawImage(cactusImg, o.x, o.y, o.w, o.h);
+        }
+
+        if (dino.x < o.x + o.w && dino.x + dino.w > o.x && dino.y < o.y + o.h && dino.y + dino.h > o.y) {
+            over = true;
+        }
+
+        if (o.x < -60) obstacles.splice(i, 1);
+    }
+
+    if (frame % 5 === 0) {
+        score++;
+        if (score % 80 === 0) speed += 0.5;
+    }
+
+    ctx.fillStyle = '#333';
+    ctx.font = '16px monospace';
+    ctx.fillText('SCORE: ' + String(score).padStart(5, '0'), 660, 25);
+
+    if (over) {
+        ctx.fillText('GAME OVER - PRESS SPACE', 280, 100);
+        return;
+    }
+
+    requestAnimationFrame(loop);
+}
+
+// Start loop once images load
+dinoImg.onload = () => loop();
+</script>
+</body>
+</html>
